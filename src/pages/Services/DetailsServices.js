@@ -1,21 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 import { MdRateReview } from "react-icons/md"
 
-const ServiceCard = ({ service }) => {
-    const { _id, img, price, title, description, author } = service;
+const DetailsServices = () => {
+
+    const serviceDetails = useLoaderData()
+
+    const { img, price, title, description, author } = serviceDetails;
+    // console.log(img)
     return (
         <div className="card card-compact w-80 bg-base-100 shadow-xl">
             <figure><img src={img} alt="Shoes" /></figure>
             <div className="card-body">
                 <h2 className="card-title">{title}</h2>
-                <p>{description.length > 100 ? description.slice(0, 100) + '...' : description}</p>
+                <p>{description}</p>
                 <p className='text-2xl text-orange-600 font-semibold'>Price: ${price}</p>
-                <div className="card-actions justify-end">
-                    <Link to={`/services/${_id}`}>
-                        <button className="btn btn-primary">See Details</button>
-                    </Link>
-                </div>
+
             </div>
             <div className="flex justify-between p-4">
                 <div className="flex">
@@ -38,4 +38,4 @@ const ServiceCard = ({ service }) => {
     );
 };
 
-export default ServiceCard;
+export default DetailsServices;

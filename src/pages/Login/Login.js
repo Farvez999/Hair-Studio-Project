@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import img from '../../assets/login.svg'
 import { AuthContext } from '../../contexts/AuthProvider';
 
@@ -7,10 +7,10 @@ const Login = () => {
 
     const { login } = useContext(AuthContext);
 
-    // let navigate = useNavigate();
-    // let location = useLocation();
+    let navigate = useNavigate();
+    let location = useLocation();
 
-    // const from = location.state?.from?.pathname || "/";
+    const from = location.state?.from?.pathname || "/";
 
 
     const handleLogin = event => {
@@ -45,7 +45,7 @@ const Login = () => {
                 //         localStorage.setItem('token', data.token);
                 //         navigate(from, { replace: true });
                 //     })
-
+                navigate(from, { replace: true });
             })
             .then(error => console.log(error));
     }

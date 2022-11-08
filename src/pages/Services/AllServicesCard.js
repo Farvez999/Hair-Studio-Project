@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { MdRateReview } from "react-icons/md"
 
-const ServiceCard = ({ service }) => {
+const AllServicesCard = ({ service }) => {
     const { _id, img, price, title, description, author } = service;
     return (
         <div className="card card-compact w-80 bg-base-100 shadow-xl">
@@ -38,4 +38,4 @@ const ServiceCard = ({ service }) => {
     );
 };
 
-export default ServiceCard;
+export default AllServicesCard;
