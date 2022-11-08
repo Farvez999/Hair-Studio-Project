@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
 import { MdRateReview } from "react-icons/md"
+import { PhotoProvider, PhotoView } from 'react-photo-view';
+import 'react-photo-view/dist/react-photo-view.css';
 
 const DetailsServices = () => {
 
@@ -10,7 +12,11 @@ const DetailsServices = () => {
     // console.log(img)
     return (
         <div className="card card-compact w-80 bg-base-100 shadow-xl">
-            <figure><img src={img} alt="Shoes" /></figure>
+            <PhotoProvider>
+                <PhotoView src={img}>
+                    <img src={img} alt="" />
+                </PhotoView>
+            </PhotoProvider>
             <div className="card-body">
                 <h2 className="card-title">{title}</h2>
                 <p>{description}</p>
