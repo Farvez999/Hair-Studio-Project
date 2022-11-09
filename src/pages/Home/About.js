@@ -2,7 +2,7 @@ import React from 'react';
 
 const About = () => {
     return (
-        <div className="hero min-h-screen bg-base-200 mt-5 rounded-xl">
+        <div className="hero min-h-screen bg-base-200 mt-5 rounded-xl mb-8">
             <div className="hero-content flex-col lg:flex-row-reverse">
                 <img src="https://images.unsplash.com/photo-1600948836101-f9ffda59d250?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8aGFpciUyMHNhbG9ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60" alt='' className="max-w-sm rounded-lg shadow-2xl" />
                 <div>

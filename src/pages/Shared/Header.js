@@ -1,32 +1,32 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/logo.png'
+import { AuthContext } from '../../contexts/AuthProvider';
 
 const Header = () => {
 
-    // const { user, logOut } = useContext(AuthContext)
+    const { user, logOut } = useContext(AuthContext)
 
-    // const handleLogOut = () => {
-    //     logOut()
-    //         .then()
-    //         .catch()
-    // }
+    const handleLogOut = () => {
+        logOut()
+            .then()
+            .catch()
+    }
 
     const menuItem = <>
         <li className='font-semibold'><Link to='/'>Home</Link></li>
         <li className='font-semibold'><Link to='/services'>Service</Link></li>
-        <li className='font-semibold'><Link to='/addServices'>Add service</Link></li>
         <li className='font-semibold'><Link to='/blog'>Blog</Link></li>
-        <li className='font-semibold'><Link to='/login'>Login</Link></li>
-        {/* {
+        <li className='font-semibold'><Link to='/addServices'>Add service</Link></li>
+        <li className='font-semibold'><Link to='/reviews'>Reviews</Link></li>
+        {
             user?.email ?
                 <>
-                    <li className='font-semibold'><Link to='/orders'>Orders</Link></li>
                     <li className='font-semibold'><button onClick={handleLogOut} type="btn-ghost">Sign Out</button></li>
                 </>
                 :
                 <li className='font-semibold'><Link to='/login'>Login</Link></li>
-        } */}
+        }
     </>
 
 

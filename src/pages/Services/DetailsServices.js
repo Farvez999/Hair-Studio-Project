@@ -1,19 +1,43 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
-import { MdRateReview } from "react-icons/md"
 import { PhotoProvider, PhotoView } from 'react-photo-view';
 import 'react-photo-view/dist/react-photo-view.css';
 import { AuthContext } from '../../contexts/AuthProvider';
 import toast, { Toaster } from 'react-hot-toast';
+import ReviewDetailsService from './ReviewDetailsService';
 
 
 const DetailsServices = () => {
-    // const { _id, title, price } = useLoaderData();
     const serviceDetails = useLoaderData()
 
     const { user } = useContext(AuthContext);
 
-    const { _id, img, price, title, description, author } = serviceDetails;
+    const { _id, img, price, title, description } = serviceDetails;
+
+    const [users, setUsers] = useState([]);
+    const [depend, setDepend] = useState(false)
+    console.log({ depend })
+
+
+    useEffect(() => {
+        fetch(`https://service-review-server-farvez999.vercel.app/reviews/${_id}`)
+            .then((res) => res.json())
+            .then((data) => {
+                setUsers(data)
+            });
+    }, []);
+
+    useEffect(() => {
+        fetch(`https://service-review-server-farvez999.vercel.app/${_id}`)
+            .then((res) => res.json())
+            .then((data) => {
+                setUsers(data)
+            });
+    }, [depend]);
+
+
+
+
 
 
     const handlePlaceOrder = event => {
@@ -27,19 +51,20 @@ const DetailsServices = () => {
         const addReview = {
             service: _id,
             serviceName: title,
-            price,
             title: name,
             img,
             email,
             review
         }
 
-        fetch('http://localhost:5000/services', {
+
+        ///Create a review post
+        fetch('https://service-review-server-farvez999.vercel.app/reviews', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
             },
-            body: JSON.stringify(addService)
+            body: JSON.stringify(addReview)
         })
             .then(res => res.json())
             .then(data => {
@@ -52,6 +77,17 @@ const DetailsServices = () => {
                 }
             })
             .catch(er => console.error(er));
+
+
+        ///Show a review post
+        fetch("https://service-review-server-farvez999.vercel.app/reviews")
+            .then((res) => res.json())
+            .then((data) => {
+                setUsers(data)
+            });
+
+        setDepend(!depend)
+
 
     }
 
@@ -69,38 +105,36 @@ const DetailsServices = () => {
 
             </div>
 
-            <div>
-                <Toaster />
-                <form onSubmit={handlePlaceOrder}>
-                    <h2 className="text-4xl">You are about to order: </h2>
-                    <h4 className="text-3xl">Price: </h4>
-                    <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
-                        <input name="name" type="text" placeholder="Name" defaultValue={user?.displayName} className="input input-ghost w-full  input-bordered" />
-                        <input name="imgURL" type="text" placeholder="Image URL" className="input input-ghost w-full  input-bordered" />
-                        <input name="email" type="text" placeholder="Your email" defaultValue={user?.email} className="input input-ghost w-full  input-bordered" readOnly />
-                    </div>
-                    <textarea name="message" className="textarea textarea-bordered h-24 w-full" placeholder="Please your Review" required></textarea>
 
-                    <input className='btn' type="submit" value="Place Your Order" />
-                </form>
+            <div className='mx-4'>
+                <h2 className="text-2xl my-4">Reviews: {title}</h2>
+                <div className='grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
+                    {
+                        users?.map(service => <ReviewDetailsService key={service._id} service={service}></ReviewDetailsService>)
+                    }
+                </div>
             </div>
-            {/* <div className="flex justify-between p-4">
-                <div className="flex">
-                    <div className="avatar">
-                        <div className="w-6 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                            <img src={author.authorImg} alt='' title={author.authorName} />
-                        </div>
-                    </div>
-                    <div className="ml-3">
-                        <h3 className='text-1xl  '>{author.authorName}</h3>
-                    </div>
-                </div>
 
-                <div className="review flex items-center" title='Reviews'>
-                    <Link className='text-primary mr-2'><MdRateReview className='text-2xl' /></Link>
-                    <p className='font-bold text-[#ff3911] text-xl'></p>
+            {user?.email ? (
+                <div className='mx-4 my-4'>
+                    <Toaster />
+                    <form onSubmit={handlePlaceOrder}>
+                        <h2 className="text-4xl my-3">Please write a review</h2>
+                        <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 my-4'>
+                            <input name="name" type="text" placeholder="Name" defaultValue={user?.displayName} className="input input-ghost w-full  input-bordered" required />
+                            <input name="imgURL" type="text" placeholder="Image URL" className="input input-ghost w-full  input-bordered" />
+                            <input name="email" type="text" placeholder="Your email" defaultValue={user?.email} className="input input-ghost w-full  input-bordered" readOnly />
+                        </div>
+                        <textarea name="message" className="textarea textarea-bordered h-24 w-full" placeholder="Please your Review" required></textarea>
+
+                        <input className='btn btn-primary my-4' type="submit" value="Please Your Review" />
+                    </form>
                 </div>
-            </div> */}
+            ) : (
+                <Link to="/login">
+                    <button className="btn btn-outline mx-4 my-4">Please login to add a review</button>
+                </Link>
+            )}
         </div>
     );
 };

@@ -15,9 +15,6 @@ const AddServices = () => {
         const description = form.message.value;
 
         const addService = {
-            //  service: _id,
-            // serviceName: title,
-            // price,
             title: name,
             img,
             email,
@@ -25,14 +22,7 @@ const AddServices = () => {
             description
         }
 
-        // if(phone.length > 10){
-        //     alert('Phone number should be 10 characters or longer')
-        // }
-        // else{
-
-        // }
-
-        fetch('http://localhost:5000/services', {
+        fetch('https://service-review-server-farvez999.vercel.app/services', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -57,17 +47,16 @@ const AddServices = () => {
         <div>
             <Toaster />
             <form onSubmit={handlePlaceOrder}>
-                <h2 className="text-4xl">You are about to order: </h2>
-                <h4 className="text-3xl">Price: </h4>
+                <h2 className="text-4xl my-4">Add Service Area</h2>
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
-                    <input name="name" type="text" placeholder="Name" defaultValue={user?.displayName} className="input input-ghost w-full  input-bordered" />
-                    <input name="imgURL" type="text" placeholder="Image URL" className="input input-ghost w-full  input-bordered" />
-                    <input name="price" type="text" placeholder="Price" className="input input-ghost w-full  input-bordered" required />
+                    <input name="name" type="text" placeholder="Service Title" defaultValue={user?.displayName} className="input input-ghost w-full  input-bordered" />
+                    <input name="imgURL" type="text" placeholder="Service Image URL" className="input input-ghost w-full  input-bordered" />
+                    <input name="price" type="text" placeholder="Service Price" className="input input-ghost w-full  input-bordered" required />
                     <input name="email" type="text" placeholder="Your email" defaultValue={user?.email} className="input input-ghost w-full  input-bordered" readOnly />
                 </div>
-                <textarea name="message" className="textarea textarea-bordered h-24 w-full" placeholder="Description" required></textarea>
+                <textarea name="message" className="textarea textarea-bordered h-24 w-full my-4" placeholder="Service Description" required></textarea>
 
-                <input className='btn' type="submit" value="Place Your Order" />
+                <input className='btn btn-primary mb-4' type="submit" value="Add your Service" />
             </form>
         </div>
     );
