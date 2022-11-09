@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import useTitle from '../../hooks/useTitle';
 import AllServicesCard from './AllServicesCard';
 
 const AllServices = () => {
 
     const [services, setServices] = useState([]);
+
+    useTitle('All Services');
+
 
     useEffect(() => {
         fetch('https://service-review-server-farvez999.vercel.app/services')

@@ -1,9 +1,12 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthProvider';
 import toast, { Toaster } from 'react-hot-toast';
+import useTitle from '../../hooks/useTitle';
 
 const AddServices = () => {
     const { user } = useContext(AuthContext);
+
+    useTitle('Service')
 
     const handlePlaceOrder = event => {
         event.preventDefault();

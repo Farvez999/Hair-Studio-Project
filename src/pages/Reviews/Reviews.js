@@ -1,11 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../contexts/AuthProvider';
+import useTitle from '../../hooks/useTitle';
 import ReviewsCard from './ReviewsCard';
 
 const Reviews = () => {
     const { logOut } = useContext(AuthContext)
     const [reviews, setReviews] = useState([]);
-    console.log(reviews)
+    // console.log(reviews)
+
+    useTitle('Reviews')
 
     useEffect(() => {
         fetch('https://service-review-server-farvez999.vercel.app/reviews', {
