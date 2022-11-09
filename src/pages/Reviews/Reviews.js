@@ -3,9 +3,15 @@ import ReviewsCard from './ReviewsCard';
 
 const Reviews = () => {
     const [reviews, setReviews] = useState([]);
+    console.log(reviews)
 
     useEffect(() => {
-        fetch('https://service-review-server-farvez999.vercel.app/reviews')
+        fetch('https://service-review-server-farvez999.vercel.app/reviews', {
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('token')}`
+
+            }
+        })
             .then(res => res.json())
             .then(data => setReviews(data))
     }, []);

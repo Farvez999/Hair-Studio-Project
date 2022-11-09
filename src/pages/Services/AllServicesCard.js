@@ -1,12 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MdRateReview } from "react-icons/md"
+import { PhotoProvider, PhotoView } from 'react-photo-view';
+import 'react-photo-view/dist/react-photo-view.css';
 
 const AllServicesCard = ({ service }) => {
     const { _id, img, price, title, description, author } = service;
     return (
         <div className="card card-compact w-80 bg-base-100 shadow-xl">
-            <figure><img src={img} alt="Shoes" /></figure>
+            {/* <figure><img src={img} alt="Shoes" /></figure> */}
+            <PhotoProvider>
+                <PhotoView src={img}>
+                    <img src={img} alt="" />
+                </PhotoView>
+            </PhotoProvider>
             <div className="card-body">
                 <h2 className="card-title">{title}</h2>
                 <p>{description.length > 100 ? description.slice(0, 100) + '...' : description}</p>
