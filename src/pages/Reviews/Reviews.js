@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '../../contexts/AuthProvider';
 import ReviewsCard from './ReviewsCard';
 
 const Reviews = () => {
+    const { logOut } = useContext(AuthContext)
     const [reviews, setReviews] = useState([]);
     console.log(reviews)
 
@@ -12,7 +14,12 @@ const Reviews = () => {
 
             }
         })
-            .then(res => res.json())
+            .then(res => {
+                if (res.status === 401 || res.status === 403) {
+                    logOut()
+                }
+                return res.json()
+            })
             .then(data => setReviews(data))
     }, []);
     return (
