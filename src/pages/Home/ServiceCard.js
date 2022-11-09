@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MdRateReview } from "react-icons/md"
-import { PhotoProvider, PhotoView } from 'react-photo-view';
-import 'react-photo-view/dist/react-photo-view.css';
+
 
 const ServiceCard = ({ service }) => {
     const { _id, img, price, title, description, author } = service;
@@ -19,7 +18,7 @@ const ServiceCard = ({ service }) => {
                     </Link>
                 </div>
             </div>
-            <div className="flex justify-between p-4">
+            {/* <div className="flex justify-between p-4">
                 <div className="flex">
                     <div className="avatar">
                         <div className="w-6 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
@@ -35,7 +34,7 @@ const ServiceCard = ({ service }) => {
                     <Link className='text-primary mr-2'><MdRateReview className='text-2xl' /></Link>
                     <p className='font-bold text-[#ff3911] text-xl'></p>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };
