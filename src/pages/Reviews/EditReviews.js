@@ -18,7 +18,7 @@ const EditReviews = () => {
         }
 
 
-        fetch(`https://service-review-server-omega.vercel.app/review/${data._id}`, {
+        fetch(`https://service-review-server-farvez999.vercel.app/review/${data._id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'

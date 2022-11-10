@@ -22,7 +22,8 @@ const AddServices = () => {
             img,
             email,
             price,
-            description
+            description,
+            time: new Date().getTime()
         }
 
         fetch('https://service-review-server-farvez999.vercel.app/services', {
@@ -50,9 +51,9 @@ const AddServices = () => {
         <div>
             <Toaster />
             <form onSubmit={handlePlaceOrder}>
-                <h2 className="text-4xl my-4">Add Service Area</h2>
+                <h2 className="text-4xl my-4">Add Service</h2>
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
-                    <input name="name" type="text" placeholder="Service Title" defaultValue={user?.displayName} className="input input-ghost w-full  input-bordered" />
+                    <input name="name" type="text" placeholder="Service Title" className="input input-ghost w-full  input-bordered" />
                     <input name="imgURL" type="text" placeholder="Service Image URL" className="input input-ghost w-full  input-bordered" />
                     <input name="price" type="text" placeholder="Service Price" className="input input-ghost w-full  input-bordered" required />
                     <input name="email" type="text" placeholder="Your email" defaultValue={user?.email} className="input input-ghost w-full  input-bordered" readOnly />

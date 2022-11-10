@@ -8,36 +8,16 @@ import ReviewDetailsService from './ReviewDetailsService';
 
 
 const DetailsServices = () => {
-    const serviceDetails = useLoaderData()
+
 
     const { user } = useContext(AuthContext);
 
-    const { _id, img, price, title, description } = serviceDetails;
+    const data = useLoaderData()
+
+    const { _id, img, price, title, description } = data;
 
     const [users, setUsers] = useState([]);
-    const [depend, setDepend] = useState(false)
-    console.log({ depend })
-
-
-    useEffect(() => {
-        fetch(`https://service-review-server-farvez999.vercel.app/reviews/${_id}`)
-            .then((res) => res.json())
-            .then((data) => {
-                setUsers(data)
-            });
-    }, []);
-
-    useEffect(() => {
-        fetch(`https://service-review-server-farvez999.vercel.app/${_id}`)
-            .then((res) => res.json())
-            .then((data) => {
-                setUsers(data)
-            });
-    }, [depend]);
-
-
-
-
+    const [update, setUpdate] = useState(false);
 
 
     const handlePlaceOrder = event => {
@@ -68,28 +48,29 @@ const DetailsServices = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 if (data.acknowledged) {
                     toast.success('Add Service successfully')
-                    // alert('Add Service successfully')
+                    setUpdate(!update);
                     form.reset();
-
                 }
+                console.log(data);
             })
             .catch(er => console.error(er));
 
 
-        ///Show a review post
-        fetch("https://service-review-server-farvez999.vercel.app/reviews")
+    };
+
+
+    useEffect(() => {
+        fetch(
+            `https://service-review-server-farvez999.vercel.app/reviews/${data?._id}`
+        )
             .then((res) => res.json())
             .then((data) => {
-                setUsers(data)
+                console.log(data);
+                setUsers(data);
             });
-
-        setDepend(!depend)
-
-
-    }
+    }, [data?._id, update]);
 
     return (
         <div className="card card-compact w-full bg-base-100 shadow-xl">
@@ -109,11 +90,14 @@ const DetailsServices = () => {
             <div className='mx-4'>
                 <h2 className="text-2xl my-4">Reviews: {title}</h2>
                 <div className='grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
-                    {
-                        users?.map(service => <ReviewDetailsService key={service._id} service={service}></ReviewDetailsService>)
-                    }
+                    {users?.map((userdata) => (
+                        <ReviewDetailsService key={userdata._id} userdata={userdata}></ReviewDetailsService>
+                    ))}
                 </div>
             </div>
+
+
+
 
             {user?.email ? (
                 <div className='mx-4 my-4'>

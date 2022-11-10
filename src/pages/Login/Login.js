@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import img from '../../assets/login.svg'
 import { AuthContext } from '../../contexts/AuthProvider';
@@ -7,7 +7,9 @@ import SocialLogin from '../SocialLogin/SocialLogin';
 
 const Login = () => {
 
-    const { login, loading } = useContext(AuthContext);
+    const { login } = useContext(AuthContext);
+
+    const [loading, setLoading] = useState(false);
 
     let navigate = useNavigate();
     let location = useLocation();
@@ -18,6 +20,7 @@ const Login = () => {
 
     const handleLogin = event => {
         event.preventDefault();
+        setLoading(true)
         const form = event.target;
         const email = form.email.value;
         const password = form.password.value;
@@ -46,11 +49,15 @@ const Login = () => {
                         console.log(data)
                         //local storage token set
                         localStorage.setItem('token', data.token);
+                        setLoading(false)
                         navigate(from, { replace: true });
                     })
 
             })
-            .catch(error => console.log(error));
+            .catch(error => {
+                setLoading(true)
+                console.log(error)
+            });
     }
 
     return (
@@ -87,6 +94,14 @@ const Login = () => {
                     </div>
                 </div>
             </div>
+            {
+                loading ? <div class="flex justify-center items-center">
+                    <div class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
+                        <span class="visually-hidden">...</span>
+                    </div>
+                </div> :
+                    ''
+            }
         </div>
     );
 };

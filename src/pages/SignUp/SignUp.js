@@ -1,18 +1,23 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import img from '../../assets/login.svg'
 import { AuthContext } from '../../contexts/AuthProvider';
 import useTitle from '../../hooks/useTitle';
 
 const SignUp = () => {
 
-    const { createUser } = useContext(AuthContext);
+    const { createUser, logOut } = useContext(AuthContext);
+
+    const [loading, setLoading] = useState(false);
+
+    const navigate = useNavigate()
 
     useTitle('Sign up');
 
 
     const handleSignUp = event => {
         event.preventDefault();
+        setLoading(true)
         const form = event.target;
         const email = form.email.value;
         const password = form.password.value;
@@ -21,9 +26,15 @@ const SignUp = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
+                setLoading(false)
+                logOut()
+                navigate('/login')
                 // setAuthToken(user);
             })
-            .catch(err => console.error(err));
+            .catch(err => {
+                console.error(err)
+                setLoading(false)
+            });
     }
 
     return (
@@ -61,6 +72,14 @@ const SignUp = () => {
                     <p className='text-center'>Already have an account?? <Link className='text-orange-600 font-bold' to="/login">Login</Link> </p>
                 </div>
             </div>
+            {
+                loading ? <div class="flex justify-center items-center">
+                    <div class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
+                        <span class="visually-hidden">...</span>
+                    </div>
+                </div> :
+                    ''
+            }
         </div>
     );
 };

@@ -51,7 +51,7 @@ const Header = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <button className='btn btn-outline btn-warning'>Appointment</button>
+                <button className='btn btn-outline btn-warning'>{user?.displayName ? user.displayName : 'User Name'}</button>
             </div>
         </div>
     );

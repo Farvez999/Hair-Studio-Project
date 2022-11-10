@@ -6,19 +6,25 @@ const AllServices = () => {
 
     const [services, setServices] = useState([]);
 
+    const [loading, setLoading] = useState(false);
+
     useTitle('All Services');
 
 
     useEffect(() => {
+        setLoading(true);
         fetch('https://service-review-server-farvez999.vercel.app/services')
             .then(res => res.json())
-            .then(data => setServices(data))
+            .then(data => {
+                setServices(data)
+                setLoading(false);
+            })
     }, []);
 
     return (
         <div>
             <div className='text-center mb-4'>
-                <h2 className="text-5xl font-semibold">Our Service Area</h2>
+                <h2 className="text-5xl font-semibold">My Service Area</h2>
             </div>
             <div className='grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
                 {
@@ -28,6 +34,15 @@ const AllServices = () => {
                     ></AllServicesCard>)
                 }
             </div>
+
+            {
+                loading ? <div class="flex justify-center items-center">
+                    <div class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
+                        <span class="visually-hidden">...</span>
+                    </div>
+                </div> :
+                    ''
+            }
         </div>
     );
 };
