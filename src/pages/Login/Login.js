@@ -3,10 +3,11 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import img from '../../assets/login.svg'
 import { AuthContext } from '../../contexts/AuthProvider';
 import useTitle from '../../hooks/useTitle';
+import SocialLogin from '../SocialLogin/SocialLogin';
 
 const Login = () => {
 
-    const { login } = useContext(AuthContext);
+    const { login, loading } = useContext(AuthContext);
 
     let navigate = useNavigate();
     let location = useLocation();
@@ -32,7 +33,7 @@ const Login = () => {
                 console.log(currentUser);
 
                 // //JWT Token
-                fetch('https://genius-car-server-ten-mocha.vercel.app/jwt',
+                fetch('https://service-review-server-farvez999.vercel.app/jwt',
                     {
                         method: 'POST',
                         headers: {
@@ -49,7 +50,7 @@ const Login = () => {
                     })
 
             })
-            .then(error => console.log(error));
+            .catch(error => console.log(error));
     }
 
     return (
@@ -82,7 +83,7 @@ const Login = () => {
                     </form>
                     <p className='text-center'>New to Genius Car <Link className='text-orange-600 font-bold' to="/signup">Sign Up</Link> </p>
                     <div className='mt-5'>
-                        {/* <SocialLogin></SocialLogin> */}
+                        <SocialLogin></SocialLogin>
                     </div>
                 </div>
             </div>

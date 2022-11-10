@@ -3,6 +3,7 @@ import Main from "../layouts/Main";
 import Blog from "../pages/Blog/Blog";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
+import EditReviews from "../pages/Reviews/EditReviews";
 import Reviews from "../pages/Reviews/Reviews";
 import AddServices from "../pages/Services/AddServices";
 import AllServices from "../pages/Services/AllServices";
@@ -47,6 +48,11 @@ export const router = createBrowserRouter([
             {
                 path: '/reviews',
                 element: <PrivateRouter><Reviews></Reviews></PrivateRouter>
+            },
+            {
+                path: '/reviewedit/:id',
+                element: <EditReviews></EditReviews>,
+                loader: ({ params }) => fetch(`https://service-review-server-omega.vercel.app/review/${params.id}`),
             },
 
         ]

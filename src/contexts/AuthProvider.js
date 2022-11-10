@@ -30,6 +30,7 @@ const AuthProvider = ({ children }) => {
     }
 
     const logOut = () => {
+        setLoading(true);
         localStorage.removeItem('token')
         return signOut(auth);
     }
@@ -37,12 +38,15 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             console.log(currentUser);
-            setUser(currentUser);
+
             setLoading(false);
+            setUser(currentUser);
+
+
         });
 
         return () => {
-            return unsubscribe();
+            unsubscribe();
         }
     }, [])
 
